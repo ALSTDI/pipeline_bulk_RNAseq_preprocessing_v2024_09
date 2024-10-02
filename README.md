@@ -7,20 +7,20 @@ Currently, the pipeline is static in terms of CPUs and memory needed for each pr
 Add a clean up step at the end. 
 
 # Pipeline file structure:
-.
-├── README.md
-├── example.yaml
-├── flowchart.html
+. <br>
+├── README.md <br>
+├── example.yaml <br>
+├── flowchart.html <br>
 ├── main.nf
-├── modules
-│   ├── diag
-│   │   └── main.nf
-│   ├── paired_processes
-│   │   └── main.nf
-│   └── single_processes
-│       └── main.nf
-├── nextflow.config
-└── sampleSheet.csv
+├── modules <br>
+│   ├── diag <br>
+│   │   └── main.nf <br>
+│   ├── paired_processes <br>
+│   │   └── main.nf <br>
+│   └── single_processes <br>
+│       └── main.nf <br>
+├── nextflow.config <br>
+└── sampleSheet.csv <br>
 
 ## Static files:
 This repository contains the following static components that you will not have to modify:  <br>
@@ -37,11 +37,11 @@ This repository contains the following static components that you will not have 
 # Quick start: 
 To run the pipeline:  <br>
 - Modify `sampleSheet.csv` <br>
-- Create `MMYY_PROJECT.yaml` based on `example.yaml` and modify accordingly. We will keep a log of `sampleSheet.csv` and this `MMYY_PROJECT.yaml`
-- Initiate the pipeline on GCloud. You will not need the `local` profile unless you're debugging. 
-'''
+- Create `MMYY_PROJECT.yaml` based on `example.yaml` and modify accordingly. We will keep a log of `sampleSheet.csv` and this `MMYY_PROJECT.yaml` <br>
+- Initiate the pipeline on GCloud. You will not need the `local` profile unless you're debugging.  <br>
+```
 nextflow run -profile cloud main.nf -params-file MMYY_PROJECT.yaml
-'''
+```
 
 
 
