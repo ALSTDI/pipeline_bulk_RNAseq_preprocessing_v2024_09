@@ -11,7 +11,7 @@ Add a clean up step at the end.
 ├── README.md <br>
 ├── example.yaml <br>
 ├── flowchart.html <br>
-├── main.nf
+├── main.nf <br>
 ├── modules <br>
 │   ├── diag <br>
 │   │   └── main.nf <br>
