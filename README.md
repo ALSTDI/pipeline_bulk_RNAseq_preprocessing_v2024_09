@@ -1,1 +1,47 @@
 # pipeline_bulk_RNAseq_preprocessing_v2024_09
+
+# TODO:
+Hard-coded variables that may need to be dynamic in the future: <br>
+diag process is grabbing ${SAMPLE}_2.fq.gz - this is the deliv format from Novogene. (?) <br>
+Currently, the pipeline is static in terms of CPUs and memory needed for each process. We need to try to optimize this based on task.attempt at a later time point. <br>
+Add a clean up step at the end. 
+
+# Pipeline file structure:
+.
+├── README.md
+├── example.yaml
+├── flowchart.html
+├── main.nf
+├── modules
+│   ├── diag
+│   │   └── main.nf
+│   ├── paired_processes
+│   │   └── main.nf
+│   └── single_processes
+│       └── main.nf
+├── nextflow.config
+└── sampleSheet.csv
+
+## Static files:
+This repository contains the following static components that you will not have to modify:  <br>
+1. `README.md`: this file <br>
+2. `flowchart.html`: workflow diagram for steps in this pipeline <br>
+3. `main.nf`: the main executable that initiates the bulk RNAseq nextflow preprocessing workflow  <br>
+4. `modules`: modules store processes that are used in main.nf workflow  <br>
+5. `nextflow.config`: you usually will not have to modify this file unless you are an advanced user <br>
+
+## Files need modifying:
+1. `example.yaml`: Environmental variables are supplied in this example yaml file to run the pipeline. The example here points to the human genome for STAR, rsem index in `refDir`, and the salmon index in `salmonDir`. The example also sets the project directory `projectDir` to the input bucket - where all input fastqs live, and the output location `out_bucket` - where all pipeline results will be stored.  <br>
+2. `sampleSheet.csv`: Supply the sample information for this project. You can reference this example `sampleSheet.csv` here to modify this file accordingly. 
+
+# Quick start: 
+To run the pipeline:  <br>
+- Modify `sampleSheet.csv` <br>
+- Create `MMYY_PROJECT.yaml` based on `example.yaml` and modify accordingly. We will keep a log of `sampleSheet.csv` and this `MMYY_PROJECT.yaml`
+- Initiate the pipeline on GCloud. You will not need the `local` profile unless you're debugging. 
+'''
+nextflow run -profile cloud main.nf -params-file MMYY_PROJECT.yaml
+'''
+
+
+

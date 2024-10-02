@@ -1,0 +1,127 @@
+<!--
+  ~ Copyright 2013-2024, Seqera Labs
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<html>
+<head>
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+</head>
+<body>
+<pre class="mermaid" style="text-align: center;">
+flowchart TB
+    subgraph " "
+    v0["Channel.fromPath"]
+    v4["Channel.fromPath"]
+    v8["Channel.fromPath"]
+    v23["NR_READS"]
+    v25["Channel.fromPath"]
+    v28["Channel.fromPath"]
+    v30["Channel.fromPath"]
+    v35["NR_READS"]
+    v37["Channel.fromPath"]
+    v40["Channel.fromPath"]
+    v43["Channel.fromPath"]
+    v50["pasi"]
+    v57["pasi"]
+    end
+    subgraph CHECK_MD5
+    v12([checksum_compare])
+    v1(( ))
+    v9(( ))
+    end
+    subgraph " "
+    v16[" "]
+    v22[" "]
+    v27[" "]
+    v34[" "]
+    v39[" "]
+    v42[" "]
+    v52[" "]
+    v59[" "]
+    end
+    v21([fastp_paired])
+    v24([sample_fasta_paired])
+    v26([salmon_paired])
+    v29([STAR_paired])
+    v31([rsem_expr_paired])
+    v32([fastqc_paired])
+    v33([fastp_single])
+    v36([sample_fasta_single])
+    v38([salmon_single])
+    v41([STAR_single])
+    v44([rsem_expr_single])
+    v45([fastqc_single])
+    v51([MULTIP])
+    v58([MULTIS])
+    v46(( ))
+    v53(( ))
+    v0 --> v1
+    v4 --> v1
+    v8 --> v9
+    v9 --> v12
+    v12 --> v1
+    v1 --> v16
+    v1 --> v21
+    v21 --> v22
+    v21 --> v24
+    v21 --> v29
+    v21 --> v32
+    v23 --> v24
+    v1 --> v24
+    v24 --> v26
+    v25 --> v26
+    v26 --> v27
+    v26 --> v31
+    v28 --> v29
+    v1 --> v29
+    v29 --> v31
+    v29 --> v46
+    v29 --> v53
+    v30 --> v31
+    v31 --> v46
+    v1 --> v32
+    v32 --> v46
+    v1 --> v33
+    v33 --> v34
+    v33 --> v36
+    v33 --> v41
+    v33 --> v45
+    v35 --> v36
+    v1 --> v36
+    v36 --> v38
+    v37 --> v38
+    v38 --> v39
+    v38 --> v44
+    v40 --> v41
+    v1 --> v41
+    v41 --> v42
+    v41 --> v44
+    v43 --> v44
+    v44 --> v53
+    v1 --> v45
+    v45 --> v53
+    v50 --> v51
+    v46 --> v51
+    v51 --> v52
+    v57 --> v58
+    v53 --> v58
+    v58 --> v59
+
+</pre>
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({ startOnLoad: true });
+</script>
+</body>
+</html>

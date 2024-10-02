@@ -1,0 +1,5 @@
+refDir    :"gs://nextflow-batch-input/_resources/genomeMapping/RSEM/Homo_sapiens/GRCh38_encode112"
+salmonDir :"gs://nextflow-batch-input/_resources/genomeMapping/SALMON/Homo_sapiens/GRCh38_gen046/salmon_index/"
+
+projectDir:"gs://nextflow-batch-input/platform/RNA-bulk/2409_E357_iPSC"
+out_bucket:"gs://nextflow-batch-output/bulkRNA/2409_test_pipeline"
