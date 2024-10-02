@@ -130,7 +130,7 @@ workflow {
 
     MULTIS(fastqc_single.out[0]
             .mix(fastqc_single.out[1])
-            .mix(STAR_paired.out[0])
+            .mix(STAR_single.out[0])
             .mix(rsem_expr_single.out)
             .collect(), "single")
 }

@@ -71,8 +71,8 @@ process fastqc_paired {
 
 process STAR_paired {
     container 'us-east1-docker.pkg.dev/compute-workspace/omics-docker-repo/rnaseq2'
-    cpus 8
-    memory '40 GB'
+    cpus 12
+    memory '96 GB'
     publishDir "${params.out_bucket}/${SAMPLE}/logs/STAR/", mode: 'copy', pattern: '*.{out,log}'
 
     input: 
@@ -90,7 +90,7 @@ process STAR_paired {
     STAR \
                         --twopassMode Basic \
                         --readFilesCommand zcat \
-                        --runThreadN ${task.cpus} \
+                        --runThreadN ${task.cpus}-2 \
                         --runMode alignReads \
                         --genomeDir ${STARREF} \
                         --readFilesIn ${trim_R1} ${trim_R2} \
@@ -150,8 +150,8 @@ process salmon_paired {
 
 process rsem_expr_paired {
     container 'us-east1-docker.pkg.dev/compute-workspace/omics-docker-repo/rnaseq2'
-    cpus 8
-    memory '40 GB'
+    cpus 12
+    memory '64 GB'
 
     publishDir(path: {"${params.out_bucket}/${SAMPLE}/RSEM"}, mode: 'copy', pattern: '*.results')
     publishDir(path: {"${params.out_bucket}/${SAMPLE}/logs"}, mode: 'copy', pattern: '*.log')
@@ -177,7 +177,7 @@ process rsem_expr_paired {
 
     # Finally initiate rsem
     rsem-calculate-expression \
-                        -p !{task.cpus} \
+                        -p !{task.cpus}-2 \
                         --paired-end \
                         --strandedness !{rsemSTRAND} \
                         --no-bam-output \

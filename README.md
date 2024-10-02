@@ -42,7 +42,9 @@ This repository contains the following static components that you will not have 
 # TODO:
 Hard-coded variables that may need to be dynamic in the future: <br>
 diag process is grabbing ${SAMPLE}_2.fq.gz - this is the deliv format from Novogene. (?) <br>
-Currently, the pipeline is static in terms of CPUs and memory needed for each process. We need to try to optimize this based on task.attempt at a later time point. <br>
-Add a clean up step at the end. 
+Currently, the pipeline is static in terms of CPUs and memory and bootdisk size needed for each process. We need to try to optimize this based on task.attempt at a later time point. Especially when bootdisk size is set to 500Gb now...  <br>
+
+Add a clean up step at the end. <br>
+
 
 
