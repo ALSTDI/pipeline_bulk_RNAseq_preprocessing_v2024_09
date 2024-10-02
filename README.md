@@ -1,10 +1,15 @@
 # pipeline_bulk_RNAseq_preprocessing_v2024_09
 
-# TODO:
-Hard-coded variables that may need to be dynamic in the future: <br>
-diag process is grabbing ${SAMPLE}_2.fq.gz - this is the deliv format from Novogene. (?) <br>
-Currently, the pipeline is static in terms of CPUs and memory needed for each process. We need to try to optimize this based on task.attempt at a later time point. <br>
-Add a clean up step at the end. 
+Pipeline to preprocess RNAseq fastqs to reads by genes or isoforms for secondary analyses. Pipeline automatically detects whether the reads are single-end or paired-end, and the strandedness of the reads.
+
+# Quick start: 
+To run the pipeline:  <br>
+- Modify `sampleSheet.csv` <br>
+- Create `MMYY_PROJECT.yaml` based on `example.yaml` and modify accordingly. We will keep a log of `sampleSheet.csv` and this `MMYY_PROJECT.yaml` <br>
+- Initiate the pipeline on GCloud. You will not need the `local` profile unless you're debugging.  <br>
+```
+nextflow run -profile cloud main.nf -params-file MMYY_PROJECT.yaml
+```
 
 # Pipeline file structure:
 . <br>
@@ -34,14 +39,10 @@ This repository contains the following static components that you will not have 
 1. `example.yaml`: Environmental variables are supplied in this example yaml file to run the pipeline. The example here points to the human genome for STAR, rsem index in `refDir`, and the salmon index in `salmonDir`. The example also sets the project directory `projectDir` to the input bucket - where all input fastqs live, and the output location `out_bucket` - where all pipeline results will be stored.  <br>
 2. `sampleSheet.csv`: Supply the sample information for this project. You can reference this example `sampleSheet.csv` here to modify this file accordingly. 
 
-# Quick start: 
-To run the pipeline:  <br>
-- Modify `sampleSheet.csv` <br>
-- Create `MMYY_PROJECT.yaml` based on `example.yaml` and modify accordingly. We will keep a log of `sampleSheet.csv` and this `MMYY_PROJECT.yaml` <br>
-- Initiate the pipeline on GCloud. You will not need the `local` profile unless you're debugging.  <br>
-```
-nextflow run -profile cloud main.nf -params-file MMYY_PROJECT.yaml
-```
-
+# TODO:
+Hard-coded variables that may need to be dynamic in the future: <br>
+diag process is grabbing ${SAMPLE}_2.fq.gz - this is the deliv format from Novogene. (?) <br>
+Currently, the pipeline is static in terms of CPUs and memory needed for each process. We need to try to optimize this based on task.attempt at a later time point. <br>
+Add a clean up step at the end. 
 
 
