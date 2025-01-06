@@ -106,19 +106,19 @@ workflow {
     fastp_paired(paired_ch)
     // # Subset reads and predict strandedness
     sample_fasta_paired( paired_ch, fastp_paired.out.trim_r1, fastp_paired.out.trim_r2, 50000 )
-    salmon_paired( Channel.fromPath(params.salmonDir), sample_fasta_paired.out )
+    salmon_paired( file(params.salmonDir), sample_fasta_paired.out )
     // # Alignment and expression quantification
-    STAR_paired( paired_ch, Channel.fromPath(params.refDir), fastp_paired.out.trim_r1, fastp_paired.out.trim_r2 )
-    rsem_expr_paired( Channel.fromPath(params.refDir), STAR_paired.out.Tr_bam, salmon_paired.out.salmon_out  )
+    STAR_paired( paired_ch, file(params.refDir), fastp_paired.out.trim_r1, fastp_paired.out.trim_r2 )
+    rsem_expr_paired( file(params.refDir), STAR_paired.out.Tr_bam, salmon_paired.out.salmon_out  )
     // QC report
     fastqc_paired( paired_ch, fastp_paired.out.trim_r1, fastp_paired.out.trim_r2 )
 
     /* SIMILAR SINGLE-END WORKFLOW */
     fastp_single(single_ch)
     sample_fasta_single(single_ch, fastp_single.out.trim_r1, 50000)
-    salmon_single( Channel.fromPath(params.salmonDir), sample_fasta_single.out )
-    STAR_single( single_ch, Channel.fromPath(params.refDir), fastp_single.out.trim_r1 )
-    rsem_expr_single( Channel.fromPath(params.refDir), STAR_single.out.Tr_bam, salmon_single.out.salmon_out )
+    salmon_single( file(params.salmonDir), sample_fasta_single.out )
+    STAR_single( single_ch, file(params.refDir), fastp_single.out.trim_r1 )
+    rsem_expr_single( file(params.refDir), STAR_single.out.Tr_bam, salmon_single.out.salmon_out )
     fastqc_single_ch = fastqc_single(single_ch, fastp_single.out.trim_r1)
 
     //TODO: multiQC

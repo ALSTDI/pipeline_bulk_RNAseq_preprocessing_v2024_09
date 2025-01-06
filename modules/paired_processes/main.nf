@@ -150,8 +150,8 @@ process salmon_paired {
 
 process rsem_expr_paired {
     container 'us-east1-docker.pkg.dev/compute-workspace/omics-docker-repo/rnaseq2'
-    cpus 12
-    memory '64 GB'
+    cpus 8
+    memory '124 GB'
 
     publishDir(path: {"${params.out_bucket}/${SAMPLE}/RSEM"}, mode: 'copy', pattern: '*.results')
     publishDir(path: {"${params.out_bucket}/${SAMPLE}/logs"}, mode: 'copy', pattern: '*.log')
@@ -177,7 +177,7 @@ process rsem_expr_paired {
 
     # Finally initiate rsem
     rsem-calculate-expression \
-                        -p !{task.cpus}-2 \
+                        -p !{task.cpus} \
                         --paired-end \
                         --strandedness !{rsemSTRAND} \
                         --no-bam-output \
@@ -185,9 +185,12 @@ process rsem_expr_paired {
                         --alignments \
                         rsem_!{SAMPLE}_Aligned.toTranscriptome.out.bam \
                         ${INDEX} \
-                        !{SAMPLE}n >& rsem.log
+                        !{SAMPLE}n >& rsem_!{SAMPLE}.log
     
-    sed -i '1i Quantifying expression level for !{SAMPLE} with strandedness set to !{rsemSTRAND}' rsem.log
+    sed -i '1i Quantifying expression level for !{SAMPLE} with strandedness set to !{rsemSTRAND}' rsem_!{SAMPLE}.log
+    # Clean up for MultiQC
+    rm file1
+    rm file2
     '''
 }
 
