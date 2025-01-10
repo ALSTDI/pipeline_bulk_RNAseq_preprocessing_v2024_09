@@ -32,6 +32,80 @@ process checksum_compare {
     """
 }
 
+process fq_line_compare_paired {
+    /* process should not give an error,
+    even when the files are not identical,
+    because cmp command is inside the if statement */
+    /* use this instead of checksum_compare in the case when
+    there is no available historic checksums to compare to */
+    container 'us-east1-docker.pkg.dev/compute-workspace/omics-docker-repo/rnaseq2'
+    cpus 4
+    memory '16 GB'
+    
+    input:
+    tuple val(SAMPLE), path(R1), path(R2)
+
+    output:
+    tuple val(SAMPLE), 
+    env(is_faithful), emit: is_faithful
+
+    shell:
+    """
+    zcat !{R1} > !{SAMPLE}_R1.fastq
+    zcat !{R2} > !{SAMPLE}_R2.fastq
+
+    wc -l !{SAMPLE}_R1.fastq | awk '{print \$1}' > !{SAMPLE}_r1_reads
+    wc -l !{SAMPLE}_R2.fastq | awk '{print \$1}' > !{SAMPLE}_r2_reads
+
+    read_token=\$(wc -l !{SAMPLE}_R1.fastq | awk '{print \$1}')
+
+    if cmp --silent !{SAMPLE}_r1_reads !{SAMPLE}_r2_reads;
+    then
+            if [ "\$(( \$read_token % 4 ))" -eq 0 ]; then
+                echo !{SAMPLE} has the same number of reads between R1 and R2 > !{SAMPLE}_md5.summary
+                echo !{SAMPLE} reads are divisible by 4 >> !{SAMPLE}_md5.summary
+                is_faithful=true
+            else
+                echo !{SAMPLE} files are CORRUPTED > !{SAMPLE}_md5.summary
+                is_faithful=false
+            fi
+    else
+        echo !{SAMPLE} files are CORRUPTED > !{SAMPLE}_md5.summary
+        is_faithful=false
+    fi 
+    """
+}
+
+process fq_line_compare_single {
+    /* use this instead of checksum_compare in the case when
+    there is no available historic checksums to compare to 
+    for SINGLE-END reads */
+    container 'us-east1-docker.pkg.dev/compute-workspace/omics-docker-repo/rnaseq2'
+    cpus 4
+    memory '16 GB'
+    
+    input:
+    tuple val(SAMPLE), path(R1)
+
+    output:
+    tuple val(SAMPLE), 
+    env(is_faithful), emit: is_faithful
+
+    shell:
+    """
+    zcat !{R1} > !{SAMPLE}_R1.fastq
+
+    read_token=\$(wc -l !{SAMPLE}_R1.fastq | awk '{print \$1}')
+    if [ "\$(( \$read_token % 4 ))" -eq 0 ]; then
+        echo !{SAMPLE} reads are divisible by 4 > !{SAMPLE}_md5.summary
+        is_faithful=true
+    else
+        echo !{SAMPLE} files are CORRUPTED > !{SAMPLE}_md5.summary
+        is_faithful=false
+    fi
+    """
+}
+
 process sample_fasta_paired {
     /* Subset by default 100k reads for faster run with salmon to detect library types */
     container 'us-east1-docker.pkg.dev/compute-workspace/omics-docker-repo/seqtk_compress'

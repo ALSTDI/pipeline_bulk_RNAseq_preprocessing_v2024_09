@@ -149,6 +149,7 @@ process rsem_expr_single {
 
     publishDir(path: {"${params.out_bucket}/${SAMPLE}/RSEM"}, mode: 'copy', pattern: '*.results')
     publishDir(path: {"${params.out_bucket}/${SAMPLE}/logs"}, mode: 'copy', pattern: '*.log')
+    publishDir(path: {"${params.out_bucket}/${SAMPLE}/RSEM"}, mode: 'copy', pattern: '*.out.bam')
 
     input:
     path(rsem_path)
@@ -165,21 +166,21 @@ process rsem_expr_single {
     samtools view -@ !{task.cpus} !{Tr_bam} | awk '{printf "%s", \$0 " "; getline; print}' | sort -S 20G -T ./ | tr ' ' '\n' > file2 ;
     cat file1 file2 | samtools view -@ !{task.cpus} -bS - > rsem_!{SAMPLE}_Aligned.toTranscriptome.out.bam ;
 
-    # RSEM index is supplied weirdely as path_to_index/index_prefix (*.grp, *.chrlist, *idx.fa, etc.)
+    # RSEM index is supplied weirdly as path_to_index/index_prefix (*.grp, *.chrlist, *idx.fa, etc.)
     # Learned from nf-core rna-seq how to supply rsem index
     INDEX="$(find -L ./ -name "*.grp" | sed 's/\\.grp\$//')"
+    echo ${INDEX}
 
     # Finally initiate rsem
     rsem-calculate-expression \
-                        -p !{task.cpus}-2 \
                         --strandedness !{rsemSTRAND} \
                         --no-bam-output \
                         --estimate-rspd \
                         --alignments \
                         rsem_!{SAMPLE}_Aligned.toTranscriptome.out.bam \
                         ${INDEX} \
-                        !{SAMPLE} >& rsem.log
-    
-    sed -i '1i Quantifying expression level for !{SAMPLE} with strandedness set to !{rsemSTRAND}' rsem.log
+                        !{SAMPLE} >& rsem_!{SAMPLE}.log
+
+    sed -i '1i Quantifying expression level for !{SAMPLE} with strandedness set to !{rsemSTRAND}' rsem_!{SAMPLE}.log
     '''
 }
