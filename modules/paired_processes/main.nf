@@ -185,7 +185,7 @@ process rsem_expr_paired {
                         --alignments \
                         rsem_!{SAMPLE}_Aligned.toTranscriptome.out.bam \
                         ${INDEX} \
-                        !{SAMPLE}n >& rsem_!{SAMPLE}.log
+                        !{SAMPLE} >& rsem_!{SAMPLE}.log
     
     sed -i '1i Quantifying expression level for !{SAMPLE} with strandedness set to !{rsemSTRAND}' rsem_!{SAMPLE}.log
     # Clean up for MultiQC
