@@ -1,0 +1,7 @@
+## 2025-January:
+1. Update README regarding typo: MMYY_PROJECT.yaml to YYMM_PROJECT.yaml
+2. Update nextflow.config to reflect dynamic resource request for each module/process 
+3. Remove cpus and memory requirments for each process in `main.nf` in `paired` and `single_rpcoesses` modules. These resources are now reflected in `nextflow.config` instead  
+4. Add `archiving_logs.sh` to keep a record of the project. The bucket directory from this sh script needs to change based on project. 
+
+## YYYY-Month:

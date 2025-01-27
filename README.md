@@ -10,6 +10,7 @@ To run the pipeline:  <br>
 ```
 nextflow run -profile cloud main.nf -params-file MMYY_PROJECT.yaml -with-report
 ```
+- After the pipeline is finished, edit the project location from `archiving_logs.sh` and push related files to PROJECT/_project_logs for book-keeping. 
 
 # Pipeline file structure:
 . <br>
