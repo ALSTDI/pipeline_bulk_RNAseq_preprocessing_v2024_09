@@ -5,10 +5,10 @@ Pipeline to preprocess RNAseq fastqs to reads by genes or isoforms for secondary
 # Quick start: 
 To run the pipeline:  <br>
 - Modify `sampleSheet.csv` <br>
-- Create `MMYY_PROJECT.yaml` based on `example.yaml` and modify accordingly. We will keep a log of `sampleSheet.csv` and this `MMYY_PROJECT.yaml` <br>
+- Create `YYMM_PROJECT.yaml` based on `example.yaml` and modify accordingly. We will keep a log of `sampleSheet.csv` and this `MMYY_PROJECT.yaml` <br>
 - Initiate the pipeline on GCloud. You will not need the `local` profile unless you're debugging.  <br>
 ```
-nextflow run -profile cloud main.nf -params-file MMYY_PROJECT.yaml
+nextflow run -profile cloud main.nf -params-file MMYY_PROJECT.yaml -with-report
 ```
 
 # Pipeline file structure:

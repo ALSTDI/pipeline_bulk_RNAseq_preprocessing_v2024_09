@@ -5,6 +5,9 @@ process checksum_compare {
     container 'us-east1-docker.pkg.dev/compute-workspace/omics-docker-repo/rnaseq2'
     cpus 4
     memory '16 GB'
+    disk = { 64.GB * task.attempt }
+
+
     publishDir params.out_bucket, mode: 'copy'
     
     input:
@@ -35,8 +38,9 @@ process checksum_compare {
 process sample_fasta_paired {
     /* Subset by default 100k reads for faster run with salmon to detect library types */
     container 'us-east1-docker.pkg.dev/compute-workspace/omics-docker-repo/seqtk_compress'
-    cpus 4
-    memory '16 GB'
+    cpus 8
+    memory { 32.GB * task.attempt }
+    disk = { 64.GB * task.attempt }
 
     input: 
     tuple val(SAMPLE), path(R1), path(R2)
@@ -56,8 +60,9 @@ process sample_fasta_paired {
 process sample_fasta_single {
     /* Subset by default 100k reads for faster run with salmon to detect library types */
     container 'us-east1-docker.pkg.dev/compute-workspace/omics-docker-repo/seqtk_compress'
-    cpus 4
-    memory '16 GB'
+    cpus 8
+    memory = { 32.GB * task.attempt }
+    disk = { 64.GB * task.attempt }
 
     input: 
     tuple val(SAMPLE), path(R1)

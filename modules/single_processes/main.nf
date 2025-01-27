@@ -1,7 +1,6 @@
 process fastp_single {
     container 'us-east1-docker.pkg.dev/compute-workspace/omics-docker-repo/rnaseq2'
-    cpus 2
-    memory '16 GB'
+    
     publishDir "${params.out_bucket}/${SAMPLE}/logs/", mode: 'copy', pattern: '*.json'
 
     input:
@@ -32,8 +31,7 @@ process fastp_single {
 
 process fastqc_single {
     container 'us-east1-docker.pkg.dev/compute-workspace/omics-docker-repo/rnaseq2'
-    cpus 2
-    memory '16 GB'
+    
     publishDir "${params.out_bucket}/${SAMPLE}/logs/", mode: 'copy'
 
     input:
@@ -66,8 +64,7 @@ process fastqc_single {
 
 process STAR_single {
     container 'us-east1-docker.pkg.dev/compute-workspace/omics-docker-repo/rnaseq2'
-    cpus 12
-    memory '96 GB'
+    
     publishDir "${params.out_bucket}/${SAMPLE}/logs/STAR/", mode: 'copy', pattern: '*.{out,log}'
 
     input: 
@@ -99,8 +96,7 @@ process STAR_single {
 
 process salmon_single {
     container 'us-east1-docker.pkg.dev/compute-workspace/omics-docker-repo/rnaseq2'
-    cpus 8
-    memory '40 GB'
+    
     publishDir "${params.out_bucket}/${SAMPLE}/logs", mode: 'copy'
 
     input:
@@ -144,8 +140,6 @@ process salmon_single {
 
 process rsem_expr_single {
     container 'us-east1-docker.pkg.dev/compute-workspace/omics-docker-repo/rnaseq2'
-    cpus 12
-    memory '64 GB'
 
     publishDir(path: {"${params.out_bucket}/${SAMPLE}/RSEM"}, mode: 'copy', pattern: '*.results')
     publishDir(path: {"${params.out_bucket}/${SAMPLE}/logs"}, mode: 'copy', pattern: '*.log')
