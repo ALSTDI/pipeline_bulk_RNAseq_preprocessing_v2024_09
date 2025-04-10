@@ -40,6 +40,10 @@ This repository contains the following static components that you will not have 
 1. `example.yaml`: Environmental variables are supplied in this example yaml file to run the pipeline. The example here points to the human genome for STAR, rsem index in `refDir`, and the salmon index in `salmonDir`. The example also sets the project directory `projectDir` to the input bucket - where all input fastqs live, and the output location `out_bucket` - where all pipeline results will be stored.  <br>
 2. `sampleSheet.csv`: Supply the sample information for this project. You can reference this example `sampleSheet.csv` here to modify this file accordingly. 
 
+# CHANGELOG: 
+#### February 2025: 
+Add publishDir for STAR aligned bam outputs 
+
 # TODO:
 Hard-coded variables that may need to be dynamic in the future: <br>
 diag process is grabbing ${SAMPLE}_2.fq.gz - this is the deliv format from Novogene. (?) <br>

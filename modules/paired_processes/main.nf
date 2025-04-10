@@ -72,6 +72,7 @@ process STAR_paired {
     container 'us-east1-docker.pkg.dev/compute-workspace/omics-docker-repo/rnaseq2'
 
     publishDir "${params.out_bucket}/${SAMPLE}/logs/STAR/", mode: 'copy', pattern: '*.{out,log}'
+    publishDir "${params.out_bucket}/${SAMPLE}/STAR/", mode: 'copy', pattern: 'synced_ctl*.bam'
 
     input: 
     tuple val(SAMPLE), path(R1), path(R2)
