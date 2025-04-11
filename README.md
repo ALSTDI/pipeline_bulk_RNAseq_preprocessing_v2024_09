@@ -43,6 +43,7 @@ This repository contains the following static components that you will not have 
 # CHANGELOG: 
 #### February 2025: 
 Add publishDir for STAR aligned bam outputs 
+Add queueSize to in `nextflow.config` to control for oversubmitting
 
 # TODO:
 Hard-coded variables that may need to be dynamic in the future: <br>
